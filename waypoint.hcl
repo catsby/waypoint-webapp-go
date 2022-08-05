@@ -43,8 +43,9 @@ runner {
   enabled = true
 
   data_source "git" {
-    url  = "https://github.com/briancain/waypoint-webapp-go.git"
+    url  = "https://github.com/catsby/waypoint-webapp-go.git"
     path = ""
+    ref = "refs/heads/dev"
     //ref  = config.internal.DATA_REF
   }
 }
@@ -81,8 +82,8 @@ app "go" {
 
 variable "image" {
   # free tier, old container registry
-  #default     = "bcain.jfrog.io/default-docker-virtual/go"
-  default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
+  default     = "catsby.jfrog.io/default-go/go"
+  #default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
   type        = string
   description = "Image name for the built image in the Docker registry."
 }
@@ -95,8 +96,8 @@ variable "tag" {
 
 variable "registry_username" {
   default = dynamic("vault", {
-    path = "config/data/secret/registry"
-    key  = "data/registry_username"
+    path = "secret/data/jfrogcreds"
+    key = "/data/username"
   })
   type        = string
   sensitive   = true
@@ -105,8 +106,8 @@ variable "registry_username" {
 
 variable "registry_password" {
   default = dynamic("vault", {
-    path = "config/data/secret/registry"
-    key  = "data/registry_password"
+    path = "secret/data/jfrogcreds"
+    key = "/data/password"
   })
   type        = string
   sensitive   = true
