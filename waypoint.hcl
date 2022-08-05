@@ -51,66 +51,43 @@ runner {
 }
 
 app "go" {
-  # build {
-  #   use "docker-pull" {
-  #     image = var.image
-  #     tag      = var.tag
-  #     disable_entrypoint = true
-  #     auth {
-  #       username = var.registry_username
-  #       password = var.registry_password
-  #     }
-  #     # encoded_auth = base64encode(
-  #     #   jsonencode({
-  #     #     username = var.registry_username
-  #     #     password = var.registry_password
-  #     #   })
-  #     # )
-  #   }
-  #   registry {
-  #     use "docker" {
-  #       image    = var.image_updated
-  #       tag      = var.tag
-  #       username = var.registry_username
-  #       password = var.registry_password
-  #       local    = false
-  #     }
-  #   }
+  # env = {
+  #   PORT=var.port
   # }
+}
 
-  build {
-    use "pack" {}
+build {
+  use "pack" {}
 
-    registry {
-      use "docker" {
-        image    = var.image
-        tag      = var.tag
-        username = var.registry_username
-        password = var.registry_password
-        local    = false
-      }
+  registry {
+    use "docker" {
+      image    = var.image
+      tag      = var.tag
+      username = var.registry_username
+      password = var.registry_password
+      local    = false
     }
   }
+}
 
-  deploy {
-    use "kubernetes" {
-      namespace = {
-        "default"    = "default"
-        "dev" = "dev"
-      }[workspace.name]
-      probe_path   = "/"
-      image_secret = var.regcred_secret
-    }
+deploy {
+  use "kubernetes" {
+    namespace = {
+      "default"    = "default"
+      "dev" = "dev"
+    }[workspace.name]
+    probe_path   = "/"
+    image_secret = var.regcred_secret
   }
+}
 
-  release {
-    use "kubernetes" {
-      load_balancer = true
-      port = {
-        "default"    = 3000
-        "dev" = 8080
-      }[workspace.name]
-    }
+release {
+  use "kubernetes" {
+    load_balancer = true
+    port = {
+      "default"    = 3000
+      "dev" = 8080
+    }[workspace.name]
   }
 }
 
@@ -160,4 +137,13 @@ variable "regcred_secret" {
   type        = string
   description = "The existing secret name inside Kubernetes for authenticating to the container registry"
 }
+
+# variable "port" {
+#   type = int
+#   default = {
+#     "default"    = 3000
+#     "dev" = 8080
+#   }[workspace.name]
+# }
+
 
