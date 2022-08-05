@@ -51,14 +51,14 @@ runner {
 }
 
 app "go" {
-  config {
-    env = {
-      PORT={
-        "default"    = 3000
-        "dev" = 8080
-      }[workspace.name]
-    }
-  }
+  # config {
+  #   env = {
+  #     PORT={
+  #       "default"    = 3000
+  #       "dev" = 8080
+  #     }[workspace.name]
+  #   }
+  # }
 
   build {
     use "pack" {}
