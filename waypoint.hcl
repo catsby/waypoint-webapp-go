@@ -51,43 +51,48 @@ runner {
 }
 
 app "go" {
-  # env = {
-  #   PORT=var.port
-  # }
-}
-
-build {
-  use "pack" {}
-
-  registry {
-    use "docker" {
-      image    = var.image
-      tag      = var.tag
-      username = var.registry_username
-      password = var.registry_password
-      local    = false
+  config {
+    env = {
+      PORT={
+        "default"    = 3000
+        "dev" = 8080
+      }[workspace.name]
     }
   }
-}
 
-deploy {
-  use "kubernetes" {
-    namespace = {
-      "default"    = "default"
-      "dev" = "dev"
-    }[workspace.name]
-    probe_path   = "/"
-    image_secret = var.regcred_secret
+  build {
+    use "pack" {}
+
+    registry {
+      use "docker" {
+        image    = var.image
+        tag      = var.tag
+        username = var.registry_username
+        password = var.registry_password
+        local    = false
+      }
+    }
   }
-}
 
-release {
-  use "kubernetes" {
-    load_balancer = true
-    port = {
-      "default"    = 3000
-      "dev" = 8080
-    }[workspace.name]
+  deploy {
+    use "kubernetes" {
+      namespace = {
+        "default"    = "default"
+        "dev" = "dev"
+      }[workspace.name]
+      probe_path   = "/"
+      image_secret = var.regcred_secret
+    }
+  }
+
+  release {
+    use "kubernetes" {
+      load_balancer = true
+      port = {
+        "default"    = 3000
+        "dev" = 8080
+      }[workspace.name]
+    }
   }
 }
 
