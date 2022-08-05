@@ -51,21 +51,35 @@ runner {
 }
 
 app "go" {
+  build {
+    use "docker-pull" {
+      image = var.image
+      tag      = var.tag
+      auth {
+        username = var.registry_username
+        password = var.registry_password
+      }
+      # encoded_auth = base64encode(
+      #   jsonencode({
+      #     username = var.registry_username
+      #     password = var.registry_password
+      #   })
+      # )
+    }
+    registry {
+      use "docker" {
+        image    = var.image_updated
+        tag      = var.tag
+        username = var.registry_username
+        password = var.registry_password
+        local    = false
+      }
+    }
+  }
+
   # build {
-  #   use "docker-pull" {
-  #     image = var.image
-  #     tag      = var.tag
-  #     auth {
-  #       username = var.registry_username
-  #       password = var.registry_password
-  #     }
-  #     # encoded_auth = base64encode(
-  #     #   jsonencode({
-  #     #     username = var.registry_username
-  #     #     password = var.registry_password
-  #     #   })
-  #     # )
-  #   }
+  #   use "pack" {}
+
   #   registry {
   #     use "docker" {
   #       image    = var.image
@@ -76,20 +90,6 @@ app "go" {
   #     }
   #   }
   # }
-
-  build {
-    use "pack" {}
-
-    registry {
-      use "docker" {
-        image    = var.image
-        tag      = var.tag
-        username = var.registry_username
-        password = var.registry_password
-        local    = false
-      }
-    }
-  }
 
   deploy {
     use "kubernetes" {
@@ -113,6 +113,13 @@ app "go" {
 variable "image" {
   # free tier, old container registry
   default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
+  #default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
+  type        = string
+  description = "Image name for the built image in the Docker registry."
+}
+variable "image_updated" {
+  # free tier, old container registry
+  default     = "catsby.jfrog.io/waypoint-go-docker/waygo-updated"
   #default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
   type        = string
   description = "Image name for the built image in the Docker registry."
