@@ -66,7 +66,8 @@ app "go" {
     registry {
       use "docker" {
         image    = var.image
-        tag      = var.tag
+        # tag      = var.tag
+        tag = gitrefpretty()
         username = var.registry_username
         password = var.registry_password
         local    = false
