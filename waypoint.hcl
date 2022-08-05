@@ -61,7 +61,7 @@ app "go" {
       }
       # encoded_auth = base64encode(
       #   jsonencode({
-      #     username = var.registry_username,
+      #     username = var.registry_username
       #     password = var.registry_password
       #   })
       # )
