@@ -52,18 +52,28 @@ runner {
 
 app "go" {
   build {
-    use "pack" {}
-
-    registry {
-      use "docker" {
-        image    = var.image
-        tag      = var.tag
-        username = var.registry_username
-        password = var.registry_password
-        local    = false
-      }
+    use "docker-pull" {
+      image = var.image
+      tag      = var.tag
+      username = var.registry_username
+      password = var.registry_password
+      local    = false
     }
   }
+
+  # build {
+  #   use "pack" {}
+
+  #   registry {
+  #     use "docker" {
+  #       image    = var.image
+  #       tag      = var.tag
+  #       username = var.registry_username
+  #       password = var.registry_password
+  #       local    = false
+  #     }
+  #   }
+  # }
 
   deploy {
     use "kubernetes" {
