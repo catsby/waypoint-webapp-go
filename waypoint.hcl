@@ -69,7 +69,7 @@ app "go" {
     use "kubernetes" {
       namespace = {
         "default"    = "default"
-        "production" = "prod"
+        "dev" = "dev"
       }[workspace.name]
       probe_path   = "/"
       image_secret = var.regcred_secret
