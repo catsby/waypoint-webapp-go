@@ -51,35 +51,21 @@ runner {
 }
 
 app "go" {
-  build {
-    use "docker-pull" {
-      image = var.image
-      tag      = var.tag
-      auth {
-        username = var.registry_username
-        password = var.registry_password
-      }
-      # encoded_auth = base64encode(
-      #   jsonencode({
-      #     username = var.registry_username
-      #     password = var.registry_password
-      #   })
-      # )
-    }
-    registry {
-      use "docker" {
-        image    = var.image
-        tag      = var.tag
-        username = var.registry_username
-        password = var.registry_password
-        local    = false
-      }
-    }
-  }
-
   # build {
-  #   use "pack" {}
-
+  #   use "docker-pull" {
+  #     image = var.image
+  #     tag      = var.tag
+  #     auth {
+  #       username = var.registry_username
+  #       password = var.registry_password
+  #     }
+  #     # encoded_auth = base64encode(
+  #     #   jsonencode({
+  #     #     username = var.registry_username
+  #     #     password = var.registry_password
+  #     #   })
+  #     # )
+  #   }
   #   registry {
   #     use "docker" {
   #       image    = var.image
@@ -90,6 +76,20 @@ app "go" {
   #     }
   #   }
   # }
+
+  build {
+    use "pack" {}
+
+    registry {
+      use "docker" {
+        image    = var.image
+        tag      = var.tag
+        username = var.registry_username
+        password = var.registry_password
+        local    = false
+      }
+    }
+  }
 
   deploy {
     use "kubernetes" {
