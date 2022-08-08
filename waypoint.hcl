@@ -105,7 +105,7 @@ app "go" {
       load_balancer = true
       port = {
         "default"    = 3000
-        "dev" = 8080
+        "dev" = 8081
       }[workspace.name]
     }
   }
