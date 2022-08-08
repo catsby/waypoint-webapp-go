@@ -53,13 +53,25 @@ runner {
 app "go" {
   config {
     env = {
-      PORT=var.port
-      # PORT={
-      #   "default"    = 3000
-      #   "dev" = 8080
-      # }[workspace.name]
+      PORT=3000
+    }
+
+    workspace "dev" {
+      env = {
+        PORT=8080
+      }
     }
   }
+
+  # config {
+  #   env = {
+  #     PORT=var.port
+  #     # PORT={
+  #     #   "default"    = 3000
+  #     #   "dev" = 8080
+  #     # }[workspace.name]
+  #   }
+  # }
 
   build {
     use "pack" {}
