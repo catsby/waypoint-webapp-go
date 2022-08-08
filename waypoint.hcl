@@ -98,7 +98,7 @@ app "go" {
 
 variable "image" {
   # free tier, old container registry
-  default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
+  # default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
   default = {
     "default"     = "catsby.jfrog.io/waypoint-go-docker/waygo"
     "dev"     = "catsby.jfrog.io/waypoint-go-docker/waygo-dev"
