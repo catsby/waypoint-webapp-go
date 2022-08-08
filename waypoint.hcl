@@ -90,10 +90,11 @@ app "go" {
 
   deploy {
     use "kubernetes" {
-      namespace = {
-        "default"    = "default"
-        "dev" = "dev"
-      }[workspace.name]
+      namespace = var.namespace
+      # namespace = {
+      #   "default"    = "default"
+      #   "dev" = "dev"
+      # }[workspace.name]
       probe_path   = "/"
       image_secret = var.regcred_secret
       service_port = var.port
@@ -102,11 +103,17 @@ app "go" {
 
   release {
     use "kubernetes" {
+      namespace = var.namespace
+      # namespace = {
+      #   "default"    = "default"
+      #   "dev" = "dev"
+      # }[workspace.name]
       load_balancer = true
-      port = {
-        "default"    = 3000
-        "dev" = 8081
-      }[workspace.name]
+      port = var.port
+      # port = {
+      #   "default"    = 3000
+      #   "dev" = 8081
+      # }[workspace.name]
     }
   }
 }
@@ -156,6 +163,14 @@ variable "regcred_secret" {
   default     = "regcred"
   type        = string
   description = "The existing secret name inside Kubernetes for authenticating to the container registry"
+}
+
+variable "namespace" {
+  type = string
+  default = {
+    "default"    = "default"
+    "dev" = "dev"
+  }[workspace.name]
 }
 
 variable "port" {
