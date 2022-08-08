@@ -63,16 +63,6 @@ app "go" {
     }
   }
 
-  # config {
-  #   env = {
-  #     PORT=var.port
-  #     # PORT={
-  #     #   "default"    = 3000
-  #     #   "dev" = 8080
-  #     # }[workspace.name]
-  #   }
-  # }
-
   build {
     use "pack" {}
 
@@ -91,10 +81,6 @@ app "go" {
   deploy {
     use "kubernetes" {
       namespace = var.namespace
-      # namespace = {
-      #   "default"    = "default"
-      #   "dev" = "dev"
-      # }[workspace.name]
       probe_path   = "/"
       image_secret = var.regcred_secret
       service_port = var.port
@@ -104,16 +90,8 @@ app "go" {
   release {
     use "kubernetes" {
       namespace = var.namespace
-      # namespace = {
-      #   "default"    = "default"
-      #   "dev" = "dev"
-      # }[workspace.name]
       load_balancer = true
       port = var.port
-      # port = {
-      #   "default"    = 3000
-      #   "dev" = 8081
-      # }[workspace.name]
     }
   }
 }
@@ -125,13 +103,6 @@ variable "image" {
   type        = string
   description = "Image name for the built image in the Docker registry."
 }
-#variable "image_updated" {
-#  # free tier, old container registry
-#  default     = "catsby.jfrog.io/waypoint-go-docker/waygo-updated"
-#  #default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
-#  type        = string
-#  description = "Image name for the built image in the Docker registry."
-#}
 
 variable "tag" {
   default     = "latest"
@@ -175,7 +146,6 @@ variable "namespace" {
 
 variable "port" {
   type = number
-  # default = 3000
   default = {
     "default"    = 3000
     "dev" = 8080
