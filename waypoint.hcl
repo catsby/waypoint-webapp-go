@@ -147,7 +147,8 @@ variable "regcred_secret" {
 }
 
 variable "port" {
-  type = int
+  type = number
+  # default = 3000
   default = {
     "default"    = 3000
     "dev" = 8080
