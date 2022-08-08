@@ -51,14 +51,15 @@ runner {
 }
 
 app "go" {
-  # config {
-  #   env = {
-  #     PORT={
-  #       "default"    = 3000
-  #       "dev" = 8080
-  #     }[workspace.name]
-  #   }
-  # }
+  config {
+    env = {
+      PORT=var.port
+      # PORT={
+      #   "default"    = 3000
+      #   "dev" = 8080
+      # }[workspace.name]
+    }
+  }
 
   build {
     use "pack" {}
@@ -83,6 +84,7 @@ app "go" {
       }[workspace.name]
       probe_path   = "/"
       image_secret = var.regcred_secret
+      service_port = var.port
     }
   }
 
@@ -144,12 +146,12 @@ variable "regcred_secret" {
   description = "The existing secret name inside Kubernetes for authenticating to the container registry"
 }
 
-# variable "port" {
-#   type = int
-#   default = {
-#     "default"    = 3000
-#     "dev" = 8080
-#   }[workspace.name]
-# }
+variable "port" {
+  type = int
+  default = {
+    "default"    = 3000
+    "dev" = 8080
+  }[workspace.name]
+}
 
 
