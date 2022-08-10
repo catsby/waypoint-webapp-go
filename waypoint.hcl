@@ -98,11 +98,11 @@ app "go" {
 
 variable "image" {
   # free tier, old container registry
-  # default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
-  default = {
-    "default"     = "catsby.jfrog.io/waypoint-go-docker/waygo"
-    "dev"     = "catsby.jfrog.io/waypoint-go-docker/waygo-dev"
-  }[workspace.name]
+  default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
+  # default = {
+  #   "default"     = "catsby.jfrog.io/waypoint-go-docker/waygo"
+  #   "dev"     = "catsby.jfrog.io/waypoint-go-docker/waygo-dev"
+  # }[workspace.name]
   #default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
   type        = string
   description = "Image name for the built image in the Docker registry."
