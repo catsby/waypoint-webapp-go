@@ -2,36 +2,43 @@ project = "go-gitops-0"
 
 pipeline "mario" {
   step "all-of-it" {
+    image_url="localhost:5000/waypoint-odr"
     use "up" {
     }
   }
   step "hammer" {
+    image_url="localhost:5000/waypoint-odr"
     use "build" {
       disable_push = false
     }
   }
   step "level-up" {
+    image_url="localhost:5000/waypoint-odr"
     use "deploy" {
       release = false
     }
   }
   step "the-end" {
+    image_url="localhost:5000/waypoint-odr"
     use "release" {
     }
   }
   step "superstar" {
+    image_url="localhost:5000/waypoint-odr"
     use "exec" {
       command = "echo"
       args    = ["\nhello!!"]
     }
   }
   step "mushroom" {
+    image_url="localhost:5000/waypoint-odr"
     use "exec" {
       command = "ls"
       args    = ["-lah"]
     }
   }
   step "castle" {
+    image_url="localhost:5000/waypoint-odr"
     use "exec" {
       command = "echo"
       args    = ["\ngoodbye o/"]
@@ -98,11 +105,11 @@ app "go" {
 
 variable "image" {
   # free tier, old container registry
-  default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
-  # default = {
-  #   "default"     = "catsby.jfrog.io/waypoint-go-docker/waygo"
-  #   "dev"     = "catsby.jfrog.io/waypoint-go-docker/waygo-dev"
-  # }[workspace.name]
+  # default     = "catsby.jfrog.io/waypoint-go-docker/waygo"
+  default = {
+    "default"     = "catsby.jfrog.io/waypoint-go-docker/waygo"
+    "dev"     = "catsby.jfrog.io/waypoint-go-docker/waygo-dev"
+  }[workspace.name]
   #default     = "team-waypoint-dev-docker-local.artifactory.hashicorp.engineering/go"
   type        = string
   description = "Image name for the built image in the Docker registry."
