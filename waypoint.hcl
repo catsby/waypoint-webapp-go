@@ -1,4 +1,5 @@
 project = "go-gitops-0"
+
 pipeline "bowser" {
   step "all-of-it" {
     use "up" {
@@ -9,6 +10,20 @@ pipeline "bowser" {
     use "exec" {
       command = "echo"
       args    = ["\nhello!!"]
+    }
+  }
+}
+
+pipeline "toad" {
+  step "just-build" {
+    use "build" {
+    }
+  }
+  step "superstar" {
+    image_url="localhost:5000/waypoint-odr"
+    use "exec" {
+      command = "echo"
+      args    = ["\nbuild complete"]
     }
   }
 }
@@ -163,7 +178,6 @@ variable "namespace" {
 
 variable "port" {
   type = number
-  # default = 1
   default = {
     "default"    = 3000
     "dev" = 8080
