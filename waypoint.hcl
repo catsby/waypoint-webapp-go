@@ -2,24 +2,20 @@ project = "go-gitops-0"
 
 pipeline "mario" {
   step "all-of-it" {
-    image_url="localhost:5000/waypoint-odr"
     use "up" {
     }
   }
   step "hammer" {
-    image_url="localhost:5000/waypoint-odr"
     use "build" {
       disable_push = false
     }
   }
   step "level-up" {
-    image_url="localhost:5000/waypoint-odr"
     use "deploy" {
       release = false
     }
   }
   step "the-end" {
-    image_url="localhost:5000/waypoint-odr"
     use "release" {
     }
   }
