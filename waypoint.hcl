@@ -1,43 +1,43 @@
 project = "go-gitops-0"
 
-# pipeline "mario" {
-#   step "all-of-it" {
-#     use "up" {
-#     }
-#   }
-#   step "hammer" {
-#     use "build" {
-#       disable_push = false
-#     }
-#   }
-#   step "level-up" {
-#     use "deploy" {
-#       release = false
-#     }
-#   }
-#   step "the-end" {
-#     use "release" {
-#     }
-#   }
-#   step "superstar" {
-#     use "exec" {
-#       command = "echo"
-#       args    = ["\nhello!!"]
-#     }
-#   }
-#   step "mushroom" {
-#     use "exec" {
-#       command = "ls"
-#       args    = ["-lah"]
-#     }
-#   }
-#   step "castle" {
-#     use "exec" {
-#       command = "echo"
-#       args    = ["\ngoodbye o/"]
-#     }
-#   }
-# }
+pipeline "mario" {
+  step "all-of-it" {
+    use "up" {
+    }
+  }
+  step "hammer" {
+    use "build" {
+      disable_push = false
+    }
+  }
+  step "level-up" {
+    use "deploy" {
+      release = false
+    }
+  }
+  step "the-end" {
+    use "release" {
+    }
+  }
+  step "superstar" {
+    use "exec" {
+      command = "echo"
+      args    = ["\nhello!!"]
+    }
+  }
+  step "mushroom" {
+    use "exec" {
+      command = "ls"
+      args    = ["-lah"]
+    }
+  }
+  step "castle" {
+    use "exec" {
+      command = "echo"
+      args    = ["\ngoodbye o/"]
+    }
+  }
+}
 
 runner {
   enabled = true
