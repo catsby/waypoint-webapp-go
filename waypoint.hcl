@@ -1,10 +1,19 @@
 project = "go-gitops-0"
-
-pipeline "mario" {
+pipeline "bowser" {
   step "all-of-it" {
     use "up" {
     }
   }
+  step "superstar" {
+    image_url="localhost:5000/waypoint-odr"
+    use "exec" {
+      command = "echo"
+      args    = ["\nhello!!"]
+    }
+  }
+}
+
+pipeline "mario" {
   step "hammer" {
     use "build" {
       disable_push = false
@@ -19,6 +28,7 @@ pipeline "mario" {
     use "release" {
     }
   }
+
   step "superstar" {
     image_url="localhost:5000/waypoint-odr"
     use "exec" {
