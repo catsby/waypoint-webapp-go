@@ -1,15 +1,22 @@
 project = "go-gitops-0"
 
 pipeline "bowser" {
-  step "all-of-it" {
-    use "up" {
-    }
-  }
+  # step "all-of-it" {
+  #   use "up" {
+  #   }
+  # }
   step "superstar" {
     image_url="localhost:5000/waypoint-odr"
     use "exec" {
       command = "echo"
       args    = ["\nhello!!"]
+    }
+  }
+  step "firepower" {
+    image_url="localhost:5000/waypoint-odr"
+    use "exec" {
+      command = "echo"
+      args    = ["\nfirepower!!"]
     }
   }
 }
